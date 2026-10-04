@@ -99,14 +99,14 @@ yrityksen_sijoitustuoton_vero =
 realisoitunut_yrityksen_voitto × 18 %
 ```
 
-Huojennettu osinko lasketaan listaamattoman yhtiön osakkeiden edellisen tilikauden nettovarallisuudesta. Tässä sovelluksessa yrityksellä ei ole velkoja, joten nettovarallisuutena käytetään yrityksen eläkevuoden alun sijoitussalkun arvoa:
+Huojennettu osinko lasketaan listaamattoman yhtiön osakkeiden edellisen tilikauden nettovarallisuudesta. Nettovarallisuutena käytetään yrityksen eläkevuoden alun sijoitussalkun arvoa:
 
 ```text
 matemaattinen_arvo = yrityksen_salkun_arvo_eläkevuoden_alussa
 huojennetun_osingon_enimmäismäärä = matemaattinen_arvo × 8 %
 ```
 
-Vuoden osinko jaetaan verolajeihin vuoden kokonaisjaon ja 8 %:n rajan perusteella. Ensin käytetään huojennettu pääomatulo-osinko. Sen yli menevä osa on ansiotulo-osinkoa:
+Vuoden aikana omistajalle jaettava osinko jaetaan kahteen osaan 8 %:n rajan perusteella: 8 %:iin yhtiön matemaattisesta arvosta asti osinko on huojennettua pääomatulo-osinkoa, ja rajan ylittävä osa on ansiotulo-osinkoa:
 
 ```text
 huojennettu_pääomatulo-osinko =

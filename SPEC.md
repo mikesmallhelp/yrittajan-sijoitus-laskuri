@@ -31,7 +31,6 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuosi- ja kuukausitasolla pa
 | Yrittäjän palkkaveroprosentti | 25 % |
 | Eläkeläisen veroprosentti | 15 % |
 | Yhteisövero vuodesta 2027 alkaen | 18 % |
-| Alkusalkku | 0 € |
 
 Verotuksessa käytettävät prosentit, rajat ja ehdot ovat sovelluksen kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoja, sijoitussummaa, tuottoa ja kuluja, mutta ei veroparametreja.
 
@@ -227,7 +226,6 @@ Asetukset sisältävät käyttäjän muokattavat arvot:
 - yrityksen kuukausisijoitus
 - yksityishenkilön bruttopalkka sijoittamista varten
 - vuosituotto
-- alkusalkku
 - tilitoimistokulu.
 
 Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän arvot tallennetaan vain selaimen `localStorage`-tallennukseen. Ensimmäisellä käynnistyksellä käytetään oletusarvoja.

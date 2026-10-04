@@ -26,7 +26,6 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuosi- ja kuukausitasolla pa
 | Eläkeajan kesto | 15 vuotta |
 | Yrityksen kuukausisijoitus | 1 000 €/kk |
 | Yksityishenkilön kuukausipalkka sijoittamista varten | 1 000 €/kk brutto |
-| Listaamattoman yhtiön vuosiosinko | 20 000 €/v |
 | Sijoituksen vuosituotto ennen veroja ja kuluja | 5 % |
 | Tilitoimistokulu eläkeaikana | 1 000 €/v |
 | Yrittäjän palkkaveroprosentti | 25 % |
@@ -35,8 +34,6 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuosi- ja kuukausitasolla pa
 | Alkusalkku | 0 € |
 
 Verotuksessa käytettävät prosentit, rajat ja ehdot ovat sovelluksen kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoja, sijoitussummaa, tuottoa ja kuluja, mutta ei veroparametreja.
-
-Listaamattoman yhtiön vähintään 10 %:n omistusosuus on kiinteä mallioletus, eikä sitä näytetä käyttäjän muutettavana asetuksena.
 
 ## Laskentamalli
 
@@ -54,15 +51,13 @@ salkku_uusi = (salkku_edellinen + kuukauden_sijoitus) × (1 + kuukausituotto)
 
 ### Yrityksen sijoituspolku aktiivisena aikana
 
-Yritys sijoittaa kuukausittain käyttäjän määrittämän summan. Listaamattomasta yhtiöstä saatu vuosiosinko sijoitetaan kuukausittain tämän summan lisäksi:
+Yritys sijoittaa kuukausittain käyttäjän määrittämän summan:
 
 ```text
-yrityksen_osinkolisä_kuukaudessa = vuosiosinko / 12
-yrityksen_kuukausisijoitus =
-  yrityksen_kuukausisijoitus_asetus + yrityksen_osinkolisä_kuukaudessa
+yrityksen_kuukausisijoitus = yrityksen_kuukausisijoitus_asetus
 ```
 
-Kun yritys omistaa listaamattomasta yhtiöstä vähintään 10 %, saatu osinko käsitellään tässä mallissa verovapaana yrityksen tulona. Yrityksen sijoitussalkun realisoitunut tuotto verotetaan yhtiön tulona:
+Yrityksen sijoitussalkun realisoitunut tuotto verotetaan yhtiön tulona:
 
 ```text
 yrityksen_sijoitustuoton_vero = realisoitunut_yrityksen_voitto × 18 %
@@ -79,22 +74,11 @@ yksityishenkilön_kuukausisijoitus_palkasta =
   bruttopalkka × (1 - yrittäjän_palkkaveroprosentti)
 ```
 
-Listaamattoman yhtiön osinko tulee tässä vaihtoehdossa ensin yritykselle verovapaana osinkona, koska yrityksen omistusosuus on vähintään 10 %. Koko osinkomäärä maksetaan omistajalle palkkana, josta vähennetään yrittäjän palkkavero:
-
-```text
-netto_osinko_palkkana =
-  vuosiosinko × (1 - yrittäjän_palkkaveroprosentti)
-
-netto_osinko_sijoitukseen_kuukaudessa =
-  netto_osinko_palkkana / 12
-```
-
-Yksityishenkilön kuukausisijoitus on:
+Yksityishenkilön kuukausisijoitus muodostuu yrityksen maksamasta bruttopalkasta:
 
 ```text
 yksityishenkilön_kuukausisijoitus =
   yksityishenkilön_kuukausisijoitus_palkasta
-  + netto_osinko_sijoitukseen_kuukaudessa
 ```
 
 ### Eläkeajan yrityksen tulot
@@ -242,7 +226,6 @@ Asetukset sisältävät käyttäjän muokattavat arvot:
 - eläkeajan pituus
 - yrityksen kuukausisijoitus
 - yksityishenkilön bruttopalkka sijoittamista varten
-- listaamattoman yhtiön vuosiosinko
 - vuosituotto
 - alkusalkku
 - tilitoimistokulu.
@@ -267,11 +250,9 @@ Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän ar
 
 Laskentakaavat perustuvat Verohallinnon ohjeisiin:
 
-- Listaamattoman yhtiön osinko, osakkeen matemaattinen arvo, 8 %:n raja, 150 000 €:n raja sekä 25/75- ja 85/15-jaot:  
+- Huojennetun osingon osakkeen matemaattinen arvo, 8 %:n raja, 150 000 €:n raja sekä 25/75- ja 85/15-jaot:  
   https://www.vero.fi/henkiloasiakkaat/omaisuus/sijoitukset/osingot/osingot-listaamattomasta-yhtiosta/
 - Pääomatuloveron veronalaisen osuuden muodostuminen ja pääomatuloveron portaat verotuksen vertailukohtana:  
   https://www.vero.fi/henkiloasiakkaat/verokortti-ja-veroilmoitus/tulot-ja-vahennykset/paaomatulot/
-- Yhteisön saamien osinkojen verokohtelu ja yhteisöveron laskenta:  
-  https://www.vero.fi/syventavat-vero-ohjeet/ohje-hakusivu/48239/yhteisojen-tuloverotus/
 
 Mallissa yhteisöveron vuoden 2027 arvona käytetään käyttäjän määrittämää vaatimusta **18 %** ja eläkeajan efektiivisenä veroprosenttina **15 %**. Verohallinnon ohjeiden mukaiset osingon veronalaiset osuudet säilytetään, mutta eläkeajan veron määrässä käytetään tätä sovelluksen kiinteää 15 %:n vertailuoletusta. Verolähteet ja kiinteät parametrit dokumentoidaan sovelluksen lähdekoodiin, eikä niitä haeta vero.fi:stä sovelluksen käytön aikana.

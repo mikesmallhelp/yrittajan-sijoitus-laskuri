@@ -295,6 +295,7 @@ Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän ar
 - shadcn/ui
 - pnpm pakettien hallinnassa
 - pehmeä ja optimistinen vihreä visuaalinen teema
+- pitää toimia myös kännykällä
 - suomi käyttöliittymässä
 - suomi koodissa laskennan, verotuksen jne. käsitteissä
 - laskenta suoritetaan selaimessa

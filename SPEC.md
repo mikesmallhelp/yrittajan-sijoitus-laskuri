@@ -125,7 +125,7 @@ yrityksen_sijoitustuoton_vero =
 realisoitunut_yrityksen_voitto × 18 %
 ```
 
-Vasta kulun ja yhteisöveron vähentämisen jälkeen jäljelle jäävä määrä voidaan jakaa omistajalle osinkona:
+Vasta tilitoimistokulun ja yhteisöveron vähentämisen jälkeen jäljelle jäävä määrä voidaan jakaa omistajalle osinkona:
 
 ```text
 vuoden_osinkoon_käytettävä_määrä =
@@ -151,8 +151,7 @@ min(vuoden_osinkoon_käytettävä_määrä,
 
 ```text
 ansiotulo-osinko =
-max(vuoden_osinkoon_käytettävä_määrä
-    - huojennettu_pääomatulo-osinko, 0)
+vuoden_osinkoon_käytettävä_määrä - huojennettu_pääomatulo-osinko
 ```
 
 ```text
@@ -188,8 +187,6 @@ huojennettu_pääomatulo-osinko
 + ansiotulo-osinko
 - osingon_vero
 ```
-
-Tilitoimistokulu maksetaan ennen osinkoa vuoden lopussa. Vuoden osinkoa ei kasvateta yli eläkeajan alussa määritetyn vuosiosan, vaikka sijoitussalkku tuottaisi enemmän. Jos saldo ei riitä tavoitejakoon, jaetaan käytettävissä oleva saldo. Käyttämättä jäävät tuotot säilyvät yrityksen salkussa ja tuottavat seuraavina eläkevuosina.
 
 Eläkeajan viimeisenä vuonna yritys myy kaikki jäljellä olevat rahasto-osuudet. Tilitoimistokulun ja realisoituneen sijoitusvoiton yhteisöveron jälkeen kaikki käytettävissä olevat varat jaetaan osinkona. Eläkeajan lopun yrityssalkku on aina 0 €.
 
@@ -235,8 +232,6 @@ min(voitto-osuus, 30 000 €) × 30 %
 yksityishenkilön_vuosinettotulo =
 yksityishenkilön_bruttonosto - yksityishenkilön_vero
 ```
-
-Jos salkun arvo ei ylitä sijoitettua pääomaa, voitto-osuuden ja veron arvo on 0 €. Vuosittainen tavoitenosto määräytyy eläkeajan alun salkun jakamisesta eläkevuosien lukumäärällä. Jos saldo ei riitä tavoitenostoon, nostetaan käytettävissä oleva saldo.
 
 Eläkeajan viimeisenä vuonna yksityishenkilö myy kaikki jäljellä olevat rahasto-osuudet. Koko jäljellä oleva saldo käsitellään viimeisen vuoden bruttonostona ja myyntivoitto verotetaan normaalisti. Eläkeajan lopun yksityissalkku on aina 0 €.
 
@@ -303,8 +298,6 @@ Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän ar
 - suomi käyttöliittymässä
 - suomi koodissa laskennan, verotuksen jne. käsitteissä
 - laskenta suoritetaan selaimessa
-- veroparametrit ovat versionhallittuja kiinteitä arvoja
-- sovellus ei hae verotietoja tai muita laskentaperusteita vero.fi:stä ajon aikana
 
 ## Verolähteet ja laskentaperusteet
 

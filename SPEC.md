@@ -56,14 +56,6 @@ Yritys sijoittaa kuukausittain käyttäjän määrittämän summan:
 yrityksen_kuukausisijoitus = yrityksen_kuukausisijoitus_asetus
 ```
 
-Yrityksen sijoitussalkun realisoitunut tuotto verotetaan yhtiön tulona:
-
-```text
-yrityksen_sijoitustuoton_vero = realisoitunut_yrityksen_voitto × 18 %
-```
-
-Verottamaton arvonnousu ei aiheuta veroa ennen realisointia.
-
 ### Yksityishenkilön sijoituspolku aktiivisena aikana
 
 Yrityksen maksamasta 1 000 euron bruttopalkasta sijoitettavaksi jää:
@@ -94,6 +86,17 @@ Eläkevuosina yrityksen jäljellä oleva salkku kasvaa kuukausittain kuukausituo
 ```text
 vuoden_osinkoon_käytettävä_määrä =
 max(vuosittainen_tavoitejako - tilitoimistokulu, 0)
+```
+
+Tilitoimistokulu ja osinko rahoitetaan myymällä kasvurahasto-osuuksia vuoden lopussa. Myynnissä realisoitunut voitto on veronalaista yritystuloa:
+
+```text
+realisoitunut_yrityksen_voitto =
+myytyjen_rahasto-osuuksien_myyntihinta
+- myytyjen_rahasto-osuuksien_hankintameno
+
+yrityksen_sijoitustuoton_vero =
+realisoitunut_yrityksen_voitto × 18 %
 ```
 
 Huojennettu osinko lasketaan listaamattoman yhtiön osakkeiden edellisen tilikauden nettovarallisuudesta. Tässä sovelluksessa yrityksellä ei ole velkoja, joten nettovarallisuutena käytetään yrityksen eläkevuoden alun sijoitussalkun arvoa:

@@ -155,9 +155,19 @@ ansiotulo-osinko × 75 %
 ```
 
 ```text
+pääomatulo-osingon_vero =
+min(veronalainen_pääomatulo, 30 000 €) × 30 %
++ max(veronalainen_pääomatulo - 30 000 €, 0) × 34 %
+```
+
+```text
+ansiotulo-osingon_vero =
+veronalainen_ansiotulo × eläkeläisen_veroprosentti
+```
+
+```text
 osingon_vero =
-(veronalainen_pääomatulo + veronalainen_ansiotulo)
-× eläkeläisen_veroprosentti
+pääomatulo-osingon_vero + ansiotulo-osingon_vero
 ```
 
 ```text

@@ -169,11 +169,12 @@ voitto-osuus = bruttonosto ×
   (salkun_arvo - sijoitettu_pääoma) / salkun_arvo
 ```
 
-Veronalainen voitto-osuus jaetaan pääomatuloveron portaille:
+Rahasto-osuuksien vuosittaisesta myyntivoitosta maksetaan pääomatuloveroa 30 000 euroon asti 30 % ja sen ylittävältä osalta 34 %. Laskuri huomioi vain tässä sijoitussalkussa syntyvän myyntivoiton:
 
 ```text
 yksityishenkilön_vero =
-voitto-osuus × eläkeläisen_veroprosentti
+min(voitto-osuus, 30 000 €) × 30 %
++ max(voitto-osuus - 30 000 €, 0) × 34 %
 ```
 
 ```text

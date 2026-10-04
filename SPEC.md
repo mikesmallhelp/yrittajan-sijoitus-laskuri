@@ -111,6 +111,14 @@ vuoden_osinkoon_käytettävä_määrä =
 max(vuosittainen_tavoitejako - tilitoimistokulu, 0)
 ```
 
+Viimeisenä eläkevuonna tavoitejako korvataan koko jäljellä olevalla salkulla:
+
+```text
+vuoden_osinkoon_käytettävä_määrä =
+yrityksen_salkku_vuoden_lopussa_ennen_myyntiä
+- tilitoimistokulu
+```
+
 Tilitoimistokulu ja osinko rahoitetaan myymällä kasvurahasto-osuuksia vuoden lopussa. Myynnissä realisoitunut voitto on veronalaista yritystuloa:
 
 ```text
@@ -179,6 +187,8 @@ huojennettu_pääomatulo-osinko
 
 Tilitoimistokulu maksetaan ennen osinkoa vuoden lopussa. Vuoden osinkoa ei kasvateta yli eläkeajan alussa määritetyn vuosiosan, vaikka sijoitussalkku tuottaisi enemmän. Jos saldo ei riitä tavoitejakoon, jaetaan käytettävissä oleva saldo. Käyttämättä jäävät tuotot säilyvät yrityksen salkussa ja tuottavat seuraavina eläkevuosina.
 
+Eläkeajan viimeisenä vuonna yritys myy kaikki jäljellä olevat rahasto-osuudet. Tilitoimistokulun ja realisoituneen sijoitusvoiton yhteisöveron jälkeen kaikki käytettävissä olevat varat jaetaan osinkona. Eläkeajan lopun yrityssalkku on aina 0 €.
+
 ### Eläkeajan yksityishenkilön tulot
 
 Yksityishenkilön salkku kasvaa eläkeaikana vuosituoton verran. Vuosinosto tehdään vuoden lopussa tuoton jälkeen, joten vain noston jälkeen jäljelle jäävä saldo tuottaa seuraavana vuonna. Salkusta nostetaan vuosittain:
@@ -193,6 +203,13 @@ yksityishenkilön_salkku_aktiivisen_ajan_lopussa
 yksityishenkilön_bruttonosto =
 min(yksityishenkilön_salkku_vuoden_lopussa_ennen_nostoa,
     vuosittainen_tavoitenosto)
+```
+
+Viimeisenä eläkevuonna koko jäljellä oleva salkku nostetaan:
+
+```text
+yksityishenkilön_bruttonosto =
+yksityishenkilön_salkku_vuoden_lopussa_ennen_nostoa
 ```
 
 Nostosta verotetaan vain sijoituksen voitto-osuus. Voitto-osuus lasketaan salkun kustannusperusteen ja arvon suhteessa:
@@ -217,6 +234,8 @@ yksityishenkilön_bruttonosto - yksityishenkilön_vero
 
 Jos salkun arvo ei ylitä sijoitettua pääomaa, voitto-osuuden ja veron arvo on 0 €. Vuosittainen tavoitenosto määräytyy eläkeajan alun salkun jakamisesta eläkevuosien lukumäärällä. Jos saldo ei riitä tavoitenostoon, nostetaan käytettävissä oleva saldo.
 
+Eläkeajan viimeisenä vuonna yksityishenkilö myy kaikki jäljellä olevat rahasto-osuudet. Koko jäljellä oleva saldo käsitellään viimeisen vuoden bruttonostona ja myyntivoitto verotetaan normaalisti. Eläkeajan lopun yksityissalkku on aina 0 €.
+
 ## Käyttöliittymä
 
 ### Tulokset
@@ -231,7 +250,7 @@ Korteissa näytetään vähintään:
 - eläkeajan nettotulo yhteensä
 - eläkeaikainen nettotulo €/v
 - aktiivisen ajan lopun salkku
-- eläkeajan lopun salkku
+- eläkeajan lopun salkku (0 €)
 - maksetut verot ja kulut.
 
 Sivun pääkorostus on teksti:

@@ -245,7 +245,7 @@ Tulossivulla esitetään ensin kaksi rinnakkaista vertailukorttia:
 - **Sijoittaminen yrityksenä**
 - **Sijoittaminen yksityishenkilönä**
 
-Korteissa näytetään vähintään:
+Korteissa näytetään:
 
 - eläkeajan nettotulo yhteensä
 - eläkeaikainen nettotulo €/v
@@ -295,21 +295,17 @@ Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän ar
 - Tailwind CSS, uusin vakaa versio
 - shadcn/ui
 - pnpm pakettien hallinnassa
-- Pehmeä ja optimistinen vihreä visuaalinen teema
-- Suomi käyttöliittymän ja koodissa laskennan, verotuksen jne. käsitteissä
-- Laskenta suoritetaan selaimessa
-- Veroparametrit ovat versionhallittuja kiinteitä arvoja; `.env.local` voi sisältää tarvittaessa ympäristökohtaisia oletusarvoja
-- Sovellus ei hae verotietoja tai muita laskentaperusteita vero.fi:stä ajon aikana
+- pehmeä ja optimistinen vihreä visuaalinen teema
+- suomi käyttöliittymässä
+- suomi koodissa laskennan, verotuksen jne. käsitteissä
+- laskenta suoritetaan selaimessa
+- veroparametrit ovat versionhallittuja kiinteitä arvoja
+- sovellus ei hae verotietoja tai muita laskentaperusteita vero.fi:stä ajon aikana
 
 ## Verolähteet ja laskentaperusteet
 
 Laskentakaavat perustuvat Verohallinnon ohjeisiin:
 
-- Huojennetun osingon osakkeen matemaattinen arvo, 8 %:n raja, 150 000 €:n raja sekä 25/75- ja 85/15-jaot:  
-  https://www.vero.fi/henkiloasiakkaat/omaisuus/sijoitukset/osingot/osingot-listaamattomasta-yhtiosta/
-- Yrityksen vähintään 10 %:n omistuksella saaman listaamattoman yhtiön osingon verokohtelu:  
-  https://www.vero.fi/syventavat-vero-ohjeet/ohje-hakusivu/47901/osinkotulojen-verotus/
-- Pääomatuloveron veronalaisen osuuden muodostuminen ja pääomatuloveron portaat verotuksen vertailukohtana:  
-  https://www.vero.fi/henkiloasiakkaat/verokortti-ja-veroilmoitus/tulot-ja-vahennykset/paaomatulot/
-
-Mallissa yhteisöveron vuoden 2027 arvona käytetään käyttäjän määrittämää vaatimusta **18 %** ja eläkeajan efektiivisenä veroprosenttina **15 %**. Verohallinnon ohjeiden mukaiset osingon veronalaiset osuudet säilytetään, mutta eläkeajan veron määrässä käytetään tätä sovelluksen kiinteää 15 %:n vertailuoletusta. Verolähteet ja kiinteät parametrit dokumentoidaan sovelluksen lähdekoodiin, eikä niitä haeta vero.fi:stä sovelluksen käytön aikana.
+- https://www.vero.fi/henkiloasiakkaat/omaisuus/sijoitukset/osingot/osingot-listaamattomasta-yhtiosta/
+- https://www.vero.fi/syventavat-vero-ohjeet/ohje-hakusivu/47901/osinkotulojen-verotus/
+- https://www.vero.fi/henkiloasiakkaat/verokortti-ja-veroilmoitus/tulot-ja-vahennykset/paaomatulot/

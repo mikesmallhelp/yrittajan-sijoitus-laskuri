@@ -26,6 +26,7 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuositasolla panokset, tuoto
 | Eläkeajan kesto | 15 vuotta |
 | Yrityksen vuosisijoitus ennen yhteisöveroa | 12 000 €/v |
 | Yksityishenkilön vuosipalkka sijoittamista varten | 12 000 €/v brutto |
+| Listaamattomasta yhtiöstä saatu vuosiosinko | 20 000 €/v |
 | Sijoituksen vuosituotto ennen veroja ja kuluja | 5 % |
 | Tilitoimistokulu eläkeaikana | 1 000 €/v |
 | Yrittäjän palkkaveroprosentti | 25 % |
@@ -33,6 +34,8 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuositasolla panokset, tuoto
 | Yhteisövero vuodesta 2027 alkaen | 18 % |
 
 Verotuksessa käytettävät prosentit, rajat ja ehdot ovat sovelluksen kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoja, sijoitussummaa, tuottoa ja kuluja, mutta ei veroparametreja.
+
+Yritys omistaa listaamattomasta yhtiöstä vähintään 10 %. Omistusosuus on kiinteä mallioletus, eikä sitä näytetä asetuksissa. Tämän vuoksi yrityksen vastaanottama vuosiosinko on mallissa verovapaa.
 
 ## Laskentamalli
 
@@ -57,6 +60,14 @@ yrityksen_vuosisijoitus_ennen_yhteisöveroa
 - yrityksen_yhteisövero
 ```
 
+Listaamattomasta yhtiöstä saatu verovapaa osinko sijoitetaan kokonaan yrityksen sijoitussalkkuun:
+
+```text
+yrityksen_vuosisijoitus_yhteensä =
+yrityksen_vuosisijoitus
++ listaamattoman_yhtiön_vuosiosinko
+```
+
 ### Yksityishenkilön sijoituspolku aktiivisena aikana
 
 Yrityksen maksamasta vuosipalkasta sijoitettavaksi jää:
@@ -73,6 +84,17 @@ yksityishenkilön_vuosisijoitus =
 yksityishenkilön_vuosisijoitus_palkasta
 ```
 
+Listaamattomasta yhtiöstä saatu verovapaa osinko maksetaan tässä vaihtoehdossa omistajalle palkkana. Palkkaveron jälkeen jäävä osuus sijoitetaan yksityissalkkuun:
+
+```text
+netto_osinko_palkkana =
+listaamattoman_yhtiön_vuosiosinko
+× (1 - yrittäjän_palkkaveroprosentti)
+
+yksityishenkilön_vuosisijoitus_yhteensä =
+yksityishenkilön_vuosisijoitus
++ netto_osinko_palkkana
+```
 ### Eläkeajan yrityksen tulot
 
 Eläkeajan alussa yrityksen sijoitussalkku jaetaan eläkevuosien lukumäärällä. Tämä muodostaa vuosittaisen tavoitejaon:
@@ -230,6 +252,7 @@ Asetukset sisältävät käyttäjän muokattavat arvot:
 - eläkeajan pituus
 - yrityksen vuosisijoitus ennen yhteisöveroa
 - yksityishenkilön vuosipalkka sijoittamista varten
+- listaamattomasta yhtiöstä saatu vuosiosinko
 - vuosituotto
 - tilitoimistokulu.
 
@@ -255,6 +278,8 @@ Laskentakaavat perustuvat Verohallinnon ohjeisiin:
 
 - Huojennetun osingon osakkeen matemaattinen arvo, 8 %:n raja, 150 000 €:n raja sekä 25/75- ja 85/15-jaot:  
   https://www.vero.fi/henkiloasiakkaat/omaisuus/sijoitukset/osingot/osingot-listaamattomasta-yhtiosta/
+- Yrityksen vähintään 10 %:n omistuksella saaman listaamattoman yhtiön osingon verokohtelu:  
+  https://www.vero.fi/syventavat-vero-ohjeet/ohje-hakusivu/47901/osinkotulojen-verotus/
 - Pääomatuloveron veronalaisen osuuden muodostuminen ja pääomatuloveron portaat verotuksen vertailukohtana:  
   https://www.vero.fi/henkiloasiakkaat/verokortti-ja-veroilmoitus/tulot-ja-vahennykset/paaomatulot/
 

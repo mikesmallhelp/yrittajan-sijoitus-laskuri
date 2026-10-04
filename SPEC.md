@@ -99,60 +99,81 @@ yksityishenkilön_kuukausisijoitus =
 
 ### Eläkeajan yrityksen tulot
 
-Eläkeaikana yrityksen vuosittaisesta käytettävissä olevasta rahasta vähennetään tilitoimistokulu:
+Eläkeajan alussa yrityksen sijoitussalkku jaetaan eläkevuosien lukumäärällä. Tämä muodostaa vuosittaisen tavoitejaon:
 
 ```text
-käytettävissä_ennen_osinkoa =
-yrityksen_salkku_eläkevuoden_alussa
-+ yrityksen_realisoitu_tuotto
-- yrityksen_sijoitustuoton_vero
-- tilitoimistokulu
+vuosittainen_tavoitejako =
+yrityksen_salkku_aktiivisen_ajan_lopussa / eläkeajan_vuosien_määrä
 ```
 
-Huojennettu osinko lasketaan listaamattoman yhtiön osakkeiden edellisen tilikauden nettovarallisuudesta. Tässä sovelluksessa yrityksellä ei ole velkoja, joten nettovarallisuutena käytetään yrityksen sijoitussalkun arvoa:
+Eläkevuosina yrityksen jäljellä oleva salkku kasvaa kuukausittain kuukausituoton verran. Vuosiosinko ja tilitoimistokulu maksetaan vuoden lopussa, jolloin vain jäljelle jäänyt saldo tuottaa seuraavina kuukausina. Tavoitejaosta vähennetään eläkevuoden tilitoimistokulu:
 
 ```text
-matemaattinen_arvo = yrityksen_salkun_arvo
+vuoden_osinkoon_käytettävä_määrä =
+max(vuosittainen_tavoitejako - tilitoimistokulu, 0)
+```
+
+Huojennettu osinko lasketaan listaamattoman yhtiön osakkeiden edellisen tilikauden nettovarallisuudesta. Tässä sovelluksessa yrityksellä ei ole velkoja, joten nettovarallisuutena käytetään yrityksen eläkevuoden alun sijoitussalkun arvoa:
+
+```text
+matemaattinen_arvo = yrityksen_salkun_arvo_eläkevuoden_alussa
 huojennetun_osingon_enimmäismäärä = matemaattinen_arvo × 8 %
 ```
 
-Vuosittainen jaettava osinko on:
+Vuoden osinko jaetaan verolajeihin vuoden kokonaisjaon ja 8 %:n rajan perusteella. Ensin käytetään huojennettu pääomatulo-osinko. Sen yli menevä osa on ansiotulo-osinkoa:
 
 ```text
-yrityksen_brutto-osinko =
-min(huojennetun_osingon_enimmäismäärä,
-    käytettävissä_ennen_osinkoa,
-    jäljellä_oleva_salkku / jäljellä_olevat_eläkevuodet)
+huojennettu_pääomatulo-osinko =
+min(vuoden_osinkoon_käytettävä_määrä,
+    huojennetun_osingon_enimmäismäärä)
 ```
 
-Tilitoimistokulu maksetaan ennen osinkoa. Yrityksen jakama huojennettu osinko verotetaan omistajalla seuraavasti:
+```text
+ansiotulo-osinko =
+max(vuoden_osinkoon_käytettävä_määrä
+    - huojennettu_pääomatulo-osinko, 0)
+```
 
 ```text
 veronalainen_pääomatulo =
-min(yrityksen_brutto-osinko, 150 000 €) × 25 %
-+ max(yrityksen_brutto-osinko - 150 000 €, 0) × 85 %
+min(huojennettu_pääomatulo-osinko, 150 000 €) × 25 %
++ max(huojennettu_pääomatulo-osinko - 150 000 €, 0) × 85 %
 ```
 
 ```text
-osingon_vero = veronalainen_pääomatulo × eläkeläisen_veroprosentti
+veronalainen_ansiotulo =
+ansiotulo-osinko × 75 %
+```
+
+```text
+osingon_vero =
+(veronalainen_pääomatulo + veronalainen_ansiotulo)
+× eläkeläisen_veroprosentti
 ```
 
 ```text
 yrityksen_nettokuukausitulo =
-(yrityksen_brutto-osinko - osingon_vero) / 12
+(huojennettu_pääomatulo-osinko
+ + ansiotulo-osinko
+ - osingon_vero) / 12
 ```
 
-Huojennettua osinkoa käytetään vain 8 %:n rajaan asti. Malli ei jaa 8 %:n ylittävää ansiotulo-osinkoa.
+Tilitoimistokulu maksetaan ennen osinkoa vuoden lopussa. Vuoden osinkoa ei kasvateta yli eläkeajan alussa määritetyn vuosiosan, vaikka sijoitussalkku tuottaisi enemmän. Jos saldo ei riitä tavoitejakoon, jaetaan käytettävissä oleva saldo. Käyttämättä jäävät tuotot säilyvät yrityksen salkussa ja tuottavat seuraavina eläkevuosina.
 
 ### Eläkeajan yksityishenkilön tulot
 
-Yksityishenkilön sijoitussalkusta nostetaan vuosittain määrä, jolla salkku käytetään suunnitellusti eläkeajan loppuun:
+Yksityishenkilön salkku kasvaa eläkeaikana kuukausittain kuukausituoton verran. Vuosinosto tehdään vuoden lopussa tuoton jälkeen, joten vain noston jälkeen jäljelle jäävä saldo tuottaa seuraavina kuukausina. Salkusta nostetaan vuosittain:
+
+```text
+vuosittainen_tavoitenosto =
+yksityishenkilön_salkku_aktiivisen_ajan_lopussa
+/ eläkeajan_vuosien_määrä
+```
 
 ```text
 yksityishenkilön_bruttonosto =
-min(yksityishenkilön_salkku_eläkevuoden_alussa
-    + realisoitunut_tuotto,
-    salkku / jäljellä_olevat_eläkevuodet)
+min(yksityishenkilön_salkku_vuoden_lopussa_ennen_nostoa,
+    vuosittainen_tavoitenosto)
 ```
 
 Nostosta verotetaan vain sijoituksen voitto-osuus. Voitto-osuus lasketaan salkun kustannusperusteen ja arvon suhteessa:
@@ -174,7 +195,7 @@ yksityishenkilön_nettokuukausitulo =
 (yksityishenkilön_bruttonosto - yksityishenkilön_vero) / 12
 ```
 
-Jos salkun arvo ei ylitä sijoitettua pääomaa, voitto-osuuden ja veron arvo on 0 €. Eläkeajan salkku kasvaa tai pienenee kuukausittain samalla tuotto-oletuksella kuin aktiivisena aikana.
+Jos salkun arvo ei ylitä sijoitettua pääomaa, voitto-osuuden ja veron arvo on 0 €. Vuosittainen tavoitenosto määräytyy eläkeajan alun salkun jakamisesta eläkevuosien lukumäärällä. Jos saldo ei riitä tavoitenostoon, nostetaan käytettävissä oleva saldo.
 
 ## Käyttöliittymä
 
@@ -231,11 +252,13 @@ Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän ar
 ## Tekninen toteutus
 
 - Next.js, uusin vakaa versio, App Router
+- generoi projekti komennolla `pnpm create next-app@canary`, jolloin projektiin muodostuu `AGENTS.md`, jonka ohjeita pitää noudattaa
 - React, uusin vakaa versio
 - Tailwind CSS, uusin vakaa versio
 - shadcn/ui
+- pnpm pakettien hallinnassa
 - Pehmeä ja optimistinen vihreä visuaalinen teema
-- Suomi käyttöliittymän ja laskennan käsitteissä
+- Suomi käyttöliittymän ja koodissa laskennan, verotuksen jne. käsitteissä
 - Laskenta suoritetaan selaimessa
 - Veroparametrit ovat versionhallittuja kiinteitä arvoja; `.env.local` voi sisältää tarvittaessa ympäristökohtaisia oletusarvoja
 - Sovellus ei hae verotietoja tai muita laskentaperusteita vero.fi:stä ajon aikana

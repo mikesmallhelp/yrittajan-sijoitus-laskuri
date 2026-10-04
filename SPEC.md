@@ -179,7 +179,7 @@ pääomatulo-osingon_vero + ansiotulo-osingon_vero
 ```
 
 ```text
-yrityksen_vuosinettotulo =
+yrityssijoittajan_vuosinettotulo =
 huojennettu_pääomatulo-osinko
 + ansiotulo-osinko
 - osingon_vero

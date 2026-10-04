@@ -25,13 +25,13 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuositasolla panokset, tuoto
 | Aktiivisen yrittäjyyden kesto | 15 vuotta |
 | Eläkeajan kesto | 15 vuotta |
 | Yrityksen vuosisijoitus ennen yhteisöveroa | 12 000 €/v |
-| Yksityishenkilön vuosipalkka sijoittamista varten | 12 000 €/v brutto |
+| Yksityishenkilön vuosipalkasta sijoittamista varten | 12 000 €/v brutto |
 | Listaamattomasta yhtiöstä saatu vuosiosinko | 20 000 €/v |
 | Sijoituksen vuosituotto ennen veroja ja kuluja | 5 % |
 | Tilitoimistokulu eläkeaikana | 1 000 €/v |
 | Yrittäjän palkkaveroprosentti | 25 % |
 | Eläkeläisen veroprosentti | 15 % |
-| Yhteisövero vuodesta 2027 alkaen | 18 % |
+| Yhteisövero (vuodesta 2027 alkaen) | 18 % |
 
 Verotuksessa käytettävät prosentit, rajat ja ehdot ovat sovelluksen kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoja, sijoitussummaa, tuottoa ja kuluja, mutta ei veroparametreja.
 

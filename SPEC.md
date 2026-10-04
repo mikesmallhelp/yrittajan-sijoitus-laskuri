@@ -2,7 +2,7 @@
 
 ## Tavoite
 
-Sovellus vertaa yhden henkilön yrityksen kautta ja yksityishenkilönä sijoittamisen vaikutusta varallisuuden kertymiseen ja eläkkeen aikaiseen kuukausituloon Suomessa.
+Sovellus vertaa yhden henkilön yrityksen kautta ja yksityishenkilönä sijoittamisen vaikutusta varallisuuden kertymiseen ja eläkeajalla saatavaan nettotuloon Suomessa.
 
 Laskenta jakautuu kahteen jaksoon:
 
@@ -13,7 +13,7 @@ Päänäyttö näyttää oletusarvoilla heti:
 
 - yrityksen ja yksityishenkilön sijoitussalkkujen kehityksen
 - visuaalisen tuottokäyrän
-- eläkeajan nettokuukausitulon molemmille vaihtoehdoille
+- 15 eläkevuoden nettotulon yhteensä molemmille vaihtoehdoille
 - vaihtoehtojen erotuksen euroina ja prosentteina.
 
 Erillinen **Tarkat laskelmat** -näkymä näyttää vuosi- ja kuukausitasolla panokset, tuotot, verot, kulut, nostot ja jäljellä olevan varallisuuden.
@@ -191,15 +191,15 @@ Tulossivulla esitetään ensin kaksi rinnakkaista vertailukorttia:
 
 Korteissa näytetään vähintään:
 
-- eläkeaikainen nettotulo €/kk
 - eläkeajan nettotulo yhteensä
+- eläkeaikainen nettotulo €/kk
 - aktiivisen ajan lopun salkku
 - eläkeajan lopun salkku
 - maksetut verot ja kulut.
 
 Sivun pääkorostus on teksti:
 
-> Eläkeaikana maksettava nettotulo: yrityksenä X €/kk, yksityishenkilönä Y €/kk.
+> Eläkeajalla yhteensä saatava nettotulo: yrityksenä X €, yksityishenkilönä Y €.
 
 Tuottokäyrä näyttää molempien salkkujen arvon ajan funktiona ja erottaa aktiivisen ajan eläkeajasta.
 

@@ -38,6 +38,27 @@ describe("laskeSijoitusvertailu", () => {
     })
   })
 
+  it("käyttää asetuksista annettuja palkka- ja eläkeläisen veroprosentteja", () => {
+    const tulos = laskeSijoitusvertailu({
+      ...OLETUS_ASETUKSET,
+      aktiivisetVuodet: 1,
+      elakevuodet: 1,
+      yrityksenVuosittainenSijoitus: 100,
+      yksityisenVuosittainenPalkka: 100,
+      listaamattomanYhtionVuosiosinko: 0,
+      vuosituottoProsentti: 0,
+      tilitoimistokulu: 0,
+      yrittajanPalkkaveroProsentti: 40,
+      elakelaisenVeroProsentti: 20,
+    })
+
+    expect(tulos.yksityinen.vuosirivit[0]).toMatchObject({
+      sijoitukset: 60,
+      verot: 40,
+    })
+    expect(tulos.yritys.vuosirivit[1].verot).toBeCloseTo(11.808, 5)
+  })
+
   it("kohdistaa yritysmyynnin hankintamenon suhteellisesti", () => {
     const tulos = laskeSijoitusvertailu({
       ...OLETUS_ASETUKSET,

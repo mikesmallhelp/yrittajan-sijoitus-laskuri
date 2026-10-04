@@ -16,6 +16,12 @@ for (const leveys of [320, 390]) {
     )
     await aktiivisetVuodet.fill("10")
     await expect(aktiivisetVuodet).toHaveValue("10")
+    const palkkavero = page.getByLabel("Yrittäjän palkkaveroprosentti")
+    const elakelaisenVero = page.getByLabel("Eläkeläisen veroprosentti")
+    await expect(palkkavero).toBeVisible()
+    await expect(elakelaisenVero).toBeVisible()
+    await palkkavero.fill("40")
+    await expect(palkkavero).toHaveValue("40")
     await expect(
       page.getByRole("heading", { name: "Nettotulojen yhteenveto" })
     ).toBeVisible()

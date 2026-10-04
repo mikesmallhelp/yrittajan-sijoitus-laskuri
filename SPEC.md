@@ -33,7 +33,10 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuositasolla panokset, tuoto
 | Eläkeläisen veroprosentti | 15 % |
 | Yhteisövero (vuodesta 2027 alkaen) | 18 % |
 
-Verotuksessa käytettävät prosentit, rajat ja ehdot ovat sovelluksen kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoja, sijoitussummaa, tuottoa ja kuluja, mutta ei veroparametreja.
+Yhteisövero sekä pääoma- ja osinkoverotuksen rajat ja ehdot ovat sovelluksen
+kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoja,
+sijoitussummaa, tuottoa, kuluja, yrittäjän palkkaveroprosenttia ja eläkeläisen
+veroprosenttia.
 
 Yritys omistaa listaamattomasta yhtiöstä vähintään 10 %. Tämän vuoksi yrityksen vastaanottama vuosiosinko on mallissa verovapaa. Omistusosuus on kiinteä mallioletus, eikä sitä näytetä asetuksissa. 
 
@@ -280,6 +283,8 @@ Asetukset sisältävät käyttäjän muokattavat arvot:
 - listaamattomasta yhtiöstä saatu vuosiosinko
 - vuosituotto
 - tilitoimistokulu.
+- yrittäjän palkkaveroprosentti
+- eläkeläisen veroprosentti.
 
 Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän arvot tallennetaan vain selaimen `localStorage`-tallennukseen. Ensimmäisellä käynnistyksellä käytetään oletusarvoja.
 

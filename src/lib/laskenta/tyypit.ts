@@ -9,6 +9,8 @@ export interface Asetukset {
   listaamattomanYhtionVuosiosinko: number
   vuosituottoProsentti: number
   tilitoimistokulu: number
+  yrittajanPalkkaveroProsentti: number
+  elakelaisenVeroProsentti: number
 }
 
 export const OLETUS_ASETUKSET: Asetukset = {
@@ -19,16 +21,17 @@ export const OLETUS_ASETUKSET: Asetukset = {
   listaamattomanYhtionVuosiosinko: 20_000,
   vuosituottoProsentti: 5,
   tilitoimistokulu: 1_000,
+  yrittajanPalkkaveroProsentti: 25,
+  elakelaisenVeroProsentti: 15,
 }
 
 export const VEROMALLI = {
   yhteisovero: 0.18,
-  palkkavero: 0.25,
-  elakelaisenVero: 0.15,
   huojennetunOsingonRaja: 0.08,
   huojennetunOsingonAlempiRaja: 150_000,
   huojennetunOsingonAlempiVeronalainenOsuus: 0.25,
   huojennetunOsingonYlempiVeronalainenOsuus: 0.85,
+  ansiotuloOsingonVeronalainenOsuus: 0.75,
   paomatulonAlempiRaja: 30_000,
   paomatulonAlempiVero: 0.3,
   paomatulonYlempiVero: 0.34,

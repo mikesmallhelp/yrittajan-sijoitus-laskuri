@@ -3,9 +3,10 @@
 Selainpohjainen laskuri vertailee yrityksen kautta ja yksityishenkilönä
 sijoittamisen vaikutusta salkun kehitykseen sekä eläkeajan nettotuloihin Suomessa.
 
-Laskenta noudattaa repositorion [`SPEC.md`](./SPEC.md)-tiedostoa. Veroprosentit,
-rajat ja omistusolettamat ovat laskurin kiinteitä malliarvoja; käyttäjä voi
-muuttaa sijoitusmääriä, kestoja, tuotto-odotusta ja tilitoimistokulua.
+Laskenta noudattaa repositorion [`SPEC.md`](./SPEC.md)-tiedostoa. Käyttäjä voi
+muuttaa sijoitusmääriä, kestoja, tuotto-odotusta, tilitoimistokulua sekä
+yrittäjän palkka- ja eläkeläisen veroprosenttia. Yhteisövero sekä pääoma- ja
+osinkoverotuksen rajat ja ehdot ovat laskurin kiinteitä malliarvoja.
 
 ## Käyttö
 

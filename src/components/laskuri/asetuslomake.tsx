@@ -84,6 +84,24 @@ const KENTAT: KentanTiedot[] = [
     askel: 100,
     paate: "€/v",
   },
+  {
+    nimi: "yrittajanPalkkaveroProsentti",
+    otsikko: "Yrittäjän palkkaveroprosentti",
+    kuvaus: "Vero, joka vähennetään yksityishenkilön sijoitettavasta palkasta ja osingosta.",
+    min: 0,
+    max: 100,
+    askel: 0.1,
+    paate: "%",
+  },
+  {
+    nimi: "elakelaisenVeroProsentti",
+    otsikko: "Eläkeläisen veroprosentti",
+    kuvaus: "Vero, jota käytetään yrityksen ansiotulo-osingon verotuksessa eläkeaikana.",
+    min: 0,
+    max: 100,
+    askel: 0.1,
+    paate: "%",
+  },
 ]
 
 export function Asetuslomake({
@@ -109,8 +127,8 @@ export function Asetuslomake({
             Asetukset
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-6 text-emerald-950/65">
-            Tulokset päivittyvät heti. Veroprosentit ja verorajat ovat laskurin
-            kiinteitä malliarvoja.
+            Tulokset päivittyvät heti. Yhteisövero sekä pääoma- ja osinkoveron
+            rajat ovat laskurin kiinteitä malliarvoja.
           </p>
         </div>
         <Button

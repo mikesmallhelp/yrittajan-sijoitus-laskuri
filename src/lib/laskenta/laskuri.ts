@@ -14,6 +14,8 @@ const VUOSIEN_MINIMI = 1
 const VUOSIEN_MAKSIMI = 100
 const TUOTON_MINIMI = -100
 const TUOTON_MAKSIMI = 100
+const VEROPROSENTIN_MINIMI = 0
+const VEROPROSENTIN_MAKSIMI = 100
 
 export function validoiAsetukset(asetukset: Asetukset): Validointivirheet {
   const virheet: Validointivirheet = {}
@@ -24,6 +26,20 @@ export function validoiAsetukset(asetukset: Asetukset): Validointivirheet {
     asetukset.aktiivisetVuodet > VUOSIEN_MAKSIMI
   ) {
     virheet.aktiivisetVuodet = `Anna kokonaisluku väliltä ${VUOSIEN_MINIMI}–${VUOSIEN_MAKSIMI}.`
+  }
+
+  const veroprosenttiKentat: Array<
+    keyof Pick<Asetukset, "yrittajanPalkkaveroProsentti" | "elakelaisenVeroProsentti">
+  > = ["yrittajanPalkkaveroProsentti", "elakelaisenVeroProsentti"]
+
+  for (const kentta of veroprosenttiKentat) {
+    if (
+      !Number.isFinite(asetukset[kentta]) ||
+      asetukset[kentta] < VEROPROSENTIN_MINIMI ||
+      asetukset[kentta] > VEROPROSENTIN_MAKSIMI
+    ) {
+      virheet[kentta] = `Anna veroprosentti väliltä ${VEROPROSENTIN_MINIMI}–${VEROPROSENTIN_MAKSIMI} %.`
+    }
   }
 
   if (
@@ -114,6 +130,7 @@ function muodostaYhteenveto(
 function laskeYrityksenPolku(asetukset: Asetukset): Sijoituspolku {
   const vuosirivit: Vuosirivi[] = []
   const vuosituotto = asetukset.vuosituottoProsentti / 100
+  const elakelaisenVero = asetukset.elakelaisenVeroProsentti / 100
   let saldo = 0
   let hankintameno = 0
 
@@ -185,8 +202,8 @@ function laskeYrityksenPolku(asetukset: Asetukset): Sijoituspolku {
     const paomatuloOsingonVero = laskePaomatulovero(veronalainenPaomatulo)
     const ansiotuloOsingonVero =
       ansiotuloOsinko *
-      VEROMALLI.huojennetunOsingonYlempiVeronalainenOsuus *
-      VEROMALLI.elakelaisenVero
+      VEROMALLI.ansiotuloOsingonVeronalainenOsuus *
+      elakelaisenVero
     const osingonVero = paomatuloOsingonVero + ansiotuloOsingonVero
 
     saldo = Math.max(myyntiaEdeltavaSaldo - myyntihinta, 0)
@@ -221,6 +238,7 @@ function laskeYrityksenPolku(asetukset: Asetukset): Sijoituspolku {
 function laskeYksityisenPolku(asetukset: Asetukset): Sijoituspolku {
   const vuosirivit: Vuosirivi[] = []
   const vuosituotto = asetukset.vuosituottoProsentti / 100
+  const palkkavero = asetukset.yrittajanPalkkaveroProsentti / 100
   let saldo = 0
   let hankintameno = 0
 
@@ -228,13 +246,13 @@ function laskeYksityisenPolku(asetukset: Asetukset): Sijoituspolku {
     const alkusaldo = saldo
     const tuotot = alkusaldo * vuosituotto
     const palkastaSijoitettavaMaara =
-      asetukset.yksityisenVuosittainenPalkka * (1 - VEROMALLI.palkkavero)
+      asetukset.yksityisenVuosittainenPalkka * (1 - palkkavero)
     const osingostaSijoitettavaMaara =
-      asetukset.listaamattomanYhtionVuosiosinko * (1 - VEROMALLI.palkkavero)
+      asetukset.listaamattomanYhtionVuosiosinko * (1 - palkkavero)
     const sijoitukset = palkastaSijoitettavaMaara + osingostaSijoitettavaMaara
     const palkkaverot =
-      asetukset.yksityisenVuosittainenPalkka * VEROMALLI.palkkavero +
-      asetukset.listaamattomanYhtionVuosiosinko * VEROMALLI.palkkavero
+      asetukset.yksityisenVuosittainenPalkka * palkkavero +
+      asetukset.listaamattomanYhtionVuosiosinko * palkkavero
 
     saldo = alkusaldo + tuotot + sijoitukset
     hankintameno += sijoitukset

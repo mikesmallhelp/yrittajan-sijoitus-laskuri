@@ -92,26 +92,22 @@ yksityishenkilön_vuosisijoitus_palkasta_verojen_jälkeen
 ```
 ### Eläkeajan yrityksen tulot
 
-Eläkeajan alussa yrityksen sijoitussalkku jaetaan eläkevuosien lukumäärällä. Tämä muodostaa vuosittaisen tavoitejaon:
+Eläkevuonna yrityksen jäljellä oleva salkku kasvaa ensin vuosituoton verran.
+Tuoton jälkeinen saldo jaetaan vuosittain uudelleen jäljellä olevien
+eläkevuosien lukumäärällä, jotta myynnit seuraavat salkun toteutunutta kehitystä:
 
 ```text
-vuosittainen_tavoitejako =
-yrityksen_salkku_aktiivisen_ajan_lopussa / eläkeajan_vuosien_määrä
+jäljellä_olevat_eläkevuodet =
+eläkeajan_vuosien_määrä - kuluva_eläkevuosi + 1
 ```
 
-Eläkevuosina yrityksen jäljellä oleva salkku kasvaa vuosituoton verran. Tilitoimistokulu ja osinko rahoitetaan myymällä kasvurahasto-osuuksia vuoden lopussa, jolloin vain jäljelle jäänyt saldo tuottaa seuraavana vuonna. Muina kuin viimeisenä eläkevuotena myydään enintään vuosittaista tavoitejakoa vastaava määrä:
+Tilitoimistokulu ja osinko rahoitetaan myymällä kasvurahasto-osuuksia vuoden
+lopussa, jolloin vain jäljelle jäänyt saldo tuottaa seuraavana vuonna:
 
 ```text
 myytyjen_rahasto-osuuksien_myyntihinta =
-min(yrityksen_salkku_vuoden_lopussa_ennen_myyntiä,
-    vuosittainen_tavoitejako)
-```
-
-Viimeisenä eläkevuonna myydään koko jäljellä oleva salkku:
-
-```text
-myytyjen_rahasto-osuuksien_myyntihinta =
-yrityksen_salkku_vuoden_lopussa_ennen_myyntiä
+yrityksen_salkku_vuoden_lopussa_ennen_myyntiä /
+jäljellä_olevat_eläkevuodet
 ```
 
 Myynnissä realisoitunut voitto on veronalaista yritystuloa:
@@ -188,29 +184,27 @@ huojennettu_pääomatulo-osinko
 - osingon_vero
 ```
 
-Eläkeajan viimeisenä vuonna yritys myy kaikki jäljellä olevat rahasto-osuudet. Tilitoimistokulun ja realisoituneen sijoitusvoiton yhteisöveron jälkeen kaikki käytettävissä olevat varat jaetaan osinkona. Eläkeajan lopun yrityssalkku on aina 0 €.
+Eläkeajan viimeisenä vuonna jäljellä olevien eläkevuosien määrä on yksi, joten
+yritys myy automaattisesti kaikki jäljellä olevat rahasto-osuudet. Tilitoimistokulun
+ja realisoituneen sijoitusvoiton yhteisöveron jälkeen kaikki käytettävissä olevat
+varat jaetaan osinkona. Eläkeajan lopun yrityssalkku on aina 0 €.
 
 ### Eläkeajan yksityishenkilön tulot
 
-Yksityishenkilön salkku kasvaa eläkeaikana vuosituoton verran. Vuosinosto tehdään vuoden lopussa tuoton jälkeen, joten vain noston jälkeen jäljelle jäävä saldo tuottaa seuraavana vuonna. Salkusta nostetaan vuosittain:
+Yksityishenkilön salkku kasvaa eläkeaikana vuosituoton verran. Vuosinosto tehdään
+vuoden lopussa tuoton jälkeen, joten vain noston jälkeen jäljelle jäävä saldo tuottaa
+seuraavana vuonna. Tuoton jälkeinen saldo jaetaan vuosittain uudelleen jäljellä
+oleville eläkevuosille:
 
 ```text
-vuosittainen_tavoitenosto =
-yksityishenkilön_salkku_aktiivisen_ajan_lopussa
-/ eläkeajan_vuosien_määrä
+jäljellä_olevat_eläkevuodet =
+eläkeajan_vuosien_määrä - kuluva_eläkevuosi + 1
 ```
 
 ```text
 yksityishenkilön_bruttonosto =
-min(yksityishenkilön_salkku_vuoden_lopussa_ennen_nostoa,
-    vuosittainen_tavoitenosto)
-```
-
-Viimeisenä eläkevuonna koko jäljellä oleva salkku nostetaan:
-
-```text
-yksityishenkilön_bruttonosto =
-yksityishenkilön_salkku_vuoden_lopussa_ennen_nostoa
+yksityishenkilön_salkku_vuoden_lopussa_ennen_nostoa /
+jäljellä_olevat_eläkevuodet
 ```
 
 Nostosta verotetaan vain sijoituksen voitto-osuus. Voitto-osuus lasketaan salkun kustannusperusteen ja arvon suhteessa:
@@ -233,7 +227,10 @@ yksityishenkilön_vuosinettotulo =
 yksityishenkilön_bruttonosto - yksityishenkilön_vero
 ```
 
-Eläkeajan viimeisenä vuonna yksityishenkilö myy kaikki jäljellä olevat rahasto-osuudet. Koko jäljellä oleva saldo käsitellään viimeisen vuoden bruttonostona ja myyntivoitto verotetaan normaalisti. Eläkeajan lopun yksityissalkku on aina 0 €.
+Eläkeajan viimeisenä vuonna jäljellä olevien eläkevuosien määrä on yksi, joten
+yksityishenkilö nostaa automaattisesti kaikki jäljellä olevat rahasto-osuudet.
+Koko jäljellä oleva saldo käsitellään viimeisen vuoden bruttonostona ja myyntivoitto
+verotetaan normaalisti. Eläkeajan lopun yksityissalkku on aina 0 €.
 
 ## Käyttöliittymä
 

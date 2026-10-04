@@ -51,8 +51,30 @@ describe("laskeSijoitusvertailu", () => {
     })
     const ensimmainenElakevuosi = tulos.yritys.vuosirivit[1]
 
-    expect(ensimmainenElakevuosi.bruttotulo).toBeCloseTo(37.31, 2)
-    expect(ensimmainenElakevuosi.realisoituVoitto).toBeCloseTo(20.5, 5)
+    expect(ensimmainenElakevuosi.bruttotulo).toBeCloseTo(74.62, 2)
+    expect(ensimmainenElakevuosi.realisoituVoitto).toBeCloseTo(41, 5)
+  })
+
+  it("jakaa eläkeajan myynnit ja nostot vuosittain jäljellä oleville vuosille", () => {
+    const tulos = laskeSijoitusvertailu({
+      ...OLETUS_ASETUKSET,
+      aktiivisetVuodet: 1,
+      elakevuodet: 2,
+      yrityksenVuosittainenSijoitus: 100,
+      yksityisenVuosittainenPalkka: 100,
+      listaamattomanYhtionVuosiosinko: 0,
+      vuosituottoProsentti: 5,
+      tilitoimistokulu: 0,
+    })
+    const yrityksenElakevuodet = tulos.yritys.vuosirivit.slice(1)
+    const yksityisenElakevuodet = tulos.yksityinen.vuosirivit.slice(1)
+
+    expect(yrityksenElakevuodet[0].realisoituVoitto).toBeCloseTo(2.05, 5)
+    expect(yrityksenElakevuodet[1].realisoituVoitto).toBeCloseTo(4.2025, 5)
+    expect(yksityisenElakevuodet[0].bruttotulo).toBeCloseTo(39.375, 5)
+    expect(yksityisenElakevuodet[1].bruttotulo).toBeCloseTo(41.34375, 5)
+    expect(yrityksenElakevuodet.at(-1)?.loppusaldo).toBe(0)
+    expect(yksityisenElakevuodet.at(-1)?.loppusaldo).toBe(0)
   })
 
   it("verottaa yksityishenkilöä vain myyntivoiton osuudesta", () => {

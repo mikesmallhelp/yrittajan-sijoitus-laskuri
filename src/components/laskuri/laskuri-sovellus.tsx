@@ -168,15 +168,16 @@ export function LaskuriSovellus() {
               <TrendingUp className="size-6" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-sm font-semibold tracking-wide text-emerald-200 uppercase">
-                Suomen veromallin laskuri
-              </p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
                 Yrittäjän sijoituslaskuri
               </h1>
               <p className="mt-3 max-w-2xl text-base leading-7 text-emerald-50/80">
                 Vertaa yrityksen kautta ja yksityishenkilönä sijoittamisen vaikutusta
                 varallisuuteen sekä eläkeajan nettotuloihin.
+              </p>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-emerald-100/80">
+                Eläkeaikana myynti tai nosto tasataan vuosittain uudelleen
+                jäljellä oleville eläkevuosille salkun tuoton jälkeen.
               </p>
             </div>
           </div>

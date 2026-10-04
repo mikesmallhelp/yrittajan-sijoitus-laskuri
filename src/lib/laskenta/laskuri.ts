@@ -145,16 +145,14 @@ function laskeYrityksenPolku(asetukset: Asetukset): Sijoituspolku {
     })
   }
 
-  const vuosittainenTavoitejako = saldo / asetukset.elakevuodet
-
   for (let elakevuosi = 1; elakevuosi <= asetukset.elakevuodet; elakevuosi += 1) {
     const alkusaldo = saldo
     const tuotot = alkusaldo * vuosituotto
     const myyntiaEdeltavaSaldo = alkusaldo + tuotot
-    const onViimeinenElakevuosi = elakevuosi === asetukset.elakevuodet
-    const myyntihinta = onViimeinenElakevuosi
-      ? myyntiaEdeltavaSaldo
-      : Math.min(myyntiaEdeltavaSaldo, vuosittainenTavoitejako)
+    const jaljellaOlevatElakevuodet =
+      asetukset.elakevuodet - elakevuosi + 1
+    const myyntihinta =
+      myyntiaEdeltavaSaldo / jaljellaOlevatElakevuodet
     const myynninHankintameno =
       myyntiaEdeltavaSaldo > 0
         ? myyntihinta * (hankintameno / myyntiaEdeltavaSaldo)
@@ -257,16 +255,14 @@ function laskeYksityisenPolku(asetukset: Asetukset): Sijoituspolku {
     })
   }
 
-  const vuosittainenTavoitenosto = saldo / asetukset.elakevuodet
-
   for (let elakevuosi = 1; elakevuosi <= asetukset.elakevuodet; elakevuosi += 1) {
     const alkusaldo = saldo
     const tuotot = alkusaldo * vuosituotto
     const nostoaEdeltavaSaldo = alkusaldo + tuotot
-    const onViimeinenElakevuosi = elakevuosi === asetukset.elakevuodet
-    const bruttonosto = onViimeinenElakevuosi
-      ? nostoaEdeltavaSaldo
-      : Math.min(nostoaEdeltavaSaldo, vuosittainenTavoitenosto)
+    const jaljellaOlevatElakevuodet =
+      asetukset.elakevuodet - elakevuosi + 1
+    const bruttonosto =
+      nostoaEdeltavaSaldo / jaljellaOlevatElakevuodet
     const nostonHankintameno =
       nostoaEdeltavaSaldo > 0
         ? bruttonosto * (hankintameno / nostoaEdeltavaSaldo)

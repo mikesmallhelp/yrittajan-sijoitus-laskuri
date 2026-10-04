@@ -35,7 +35,7 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuositasolla panokset, tuoto
 
 Verotuksessa käytettävät prosentit, rajat ja ehdot ovat sovelluksen kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoja, sijoitussummaa, tuottoa ja kuluja, mutta ei veroparametreja.
 
-Yritys omistaa listaamattomasta yhtiöstä vähintään 10 %. Omistusosuus on kiinteä mallioletus, eikä sitä näytetä asetuksissa. Tämän vuoksi yrityksen vastaanottama vuosiosinko on mallissa verovapaa.
+Yritys omistaa listaamattomasta yhtiöstä vähintään 10 %. Tämän vuoksi yrityksen vastaanottama vuosiosinko on mallissa verovapaa. Omistusosuus on kiinteä mallioletus, eikä sitä näytetä asetuksissa. 
 
 ## Laskentamalli
 
@@ -73,26 +73,21 @@ yrityksen_vuosisijoitus
 Yrityksen maksamasta vuosipalkasta sijoitettavaksi jää:
 
 ```text
-yksityishenkilön_vuosisijoitus_palkasta =
-vuosipalkka × (1 - yrittäjän_palkkaveroprosentti)
+yksityishenkilön_vuosisijoitus_palkasta_verojen_jälkeen =
+yksityishenkilön_vuosisijoitus_palkasta × (1 - yrittäjän_palkkaveroprosentti)
 ```
-
-Yksityishenkilön vuosisijoitus muodostuu yrityksen maksamasta bruttopalkasta:
-
-```text
-yksityishenkilön_vuosisijoitus =
-yksityishenkilön_vuosisijoitus_palkasta
-```
-
-Listaamattomasta yhtiöstä saatu verovapaa osinko maksetaan tässä vaihtoehdossa omistajalle palkkana. Palkkaveron jälkeen jäävä osuus sijoitetaan yksityissalkkuun:
+Listaamattomasta yhtiöstä saatu verovapaa osinko maksetaan tässä vaihtoehdossa omistajalle palkkana:
 
 ```text
 netto_osinko_palkkana =
 listaamattoman_yhtiön_vuosiosinko
 × (1 - yrittäjän_palkkaveroprosentti)
+```
+Näin saadaan vuosisijoitus yhteensä:
 
+```text
 yksityishenkilön_vuosisijoitus_yhteensä =
-yksityishenkilön_vuosisijoitus
+yksityishenkilön_vuosisijoitus_palkasta_verojen_jälkeen
 + netto_osinko_palkkana
 ```
 ### Eläkeajan yrityksen tulot

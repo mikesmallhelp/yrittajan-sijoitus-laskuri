@@ -104,22 +104,22 @@ vuosittainen_tavoitejako =
 yrityksen_salkku_aktiivisen_ajan_lopussa / eläkeajan_vuosien_määrä
 ```
 
-Eläkevuosina yrityksen jäljellä oleva salkku kasvaa vuosituoton verran. Vuosiosinko ja tilitoimistokulu maksetaan vuoden lopussa, jolloin vain jäljelle jäänyt saldo tuottaa seuraavana vuonna. Tavoitejaosta vähennetään eläkevuoden tilitoimistokulu:
+Eläkevuosina yrityksen jäljellä oleva salkku kasvaa vuosituoton verran. Tilitoimistokulu ja osinko rahoitetaan myymällä kasvurahasto-osuuksia vuoden lopussa, jolloin vain jäljelle jäänyt saldo tuottaa seuraavana vuonna. Muina kuin viimeisenä eläkevuotena myydään enintään vuosittaista tavoitejakoa vastaava määrä:
 
 ```text
-vuoden_osinkoon_käytettävä_määrä =
-max(vuosittainen_tavoitejako - tilitoimistokulu, 0)
+myytyjen_rahasto-osuuksien_myyntihinta =
+min(yrityksen_salkku_vuoden_lopussa_ennen_myyntiä,
+    vuosittainen_tavoitejako)
 ```
 
-Viimeisenä eläkevuonna tavoitejako korvataan koko jäljellä olevalla salkulla:
+Viimeisenä eläkevuonna myydään koko jäljellä oleva salkku:
 
 ```text
-vuoden_osinkoon_käytettävä_määrä =
+myytyjen_rahasto-osuuksien_myyntihinta =
 yrityksen_salkku_vuoden_lopussa_ennen_myyntiä
-- tilitoimistokulu
 ```
 
-Tilitoimistokulu ja osinko rahoitetaan myymällä kasvurahasto-osuuksia vuoden lopussa. Myynnissä realisoitunut voitto on veronalaista yritystuloa:
+Myynnissä realisoitunut voitto on veronalaista yritystuloa:
 
 ```text
 realisoitunut_yrityksen_voitto =
@@ -128,6 +128,15 @@ myytyjen_rahasto-osuuksien_myyntihinta
 
 yrityksen_sijoitustuoton_vero =
 realisoitunut_yrityksen_voitto × 18 %
+```
+
+Vasta kulun ja yhteisöveron vähentämisen jälkeen jäljelle jäävä määrä voidaan jakaa omistajalle osinkona:
+
+```text
+vuoden_osinkoon_käytettävä_määrä =
+max(myytyjen_rahasto-osuuksien_myyntihinta
+    - tilitoimistokulu
+    - yrityksen_sijoitustuoton_vero, 0)
 ```
 
 Huojennettu osinko lasketaan listaamattoman yhtiön osakkeiden edellisen tilikauden nettovarallisuudesta. Nettovarallisuutena käytetään yrityksen eläkevuoden alun sijoitussalkun arvoa:

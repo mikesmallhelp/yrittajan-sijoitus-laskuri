@@ -175,10 +175,6 @@ export function LaskuriSovellus() {
                 Vertaa yrityksen kautta ja yksityishenkilönä sijoittamisen vaikutusta
                 varallisuuteen sekä eläkeajan nettotuloihin.
               </p>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-emerald-100/80">
-                Eläkeaikana myynti tai nosto tasataan vuosittain uudelleen
-                jäljellä oleville eläkevuosille salkun tuoton jälkeen.
-              </p>
             </div>
           </div>
         </header>

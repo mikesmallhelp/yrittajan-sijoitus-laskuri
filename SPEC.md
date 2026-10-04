@@ -24,7 +24,7 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuositasolla panokset, tuoto
 |---|---:|
 | Aktiivisen yrittäjyyden kesto | 15 vuotta |
 | Eläkeajan kesto | 15 vuotta |
-| Yrityksen vuosisijoitus | 12 000 €/v |
+| Yrityksen vuosisijoitus ennen yhteisöveroa | 12 000 €/v |
 | Yksityishenkilön vuosipalkka sijoittamista varten | 12 000 €/v brutto |
 | Sijoituksen vuosituotto ennen veroja ja kuluja | 5 % |
 | Tilitoimistokulu eläkeaikana | 1 000 €/v |
@@ -46,10 +46,15 @@ salkku_vuoden_alussa × (1 + vuosituotto)
 
 ### Yrityksen sijoituspolku aktiivisena aikana
 
-Yritys sijoittaa vuosittain käyttäjän määrittämän summan:
+Yrityksen vuosittaisesta sijoitettavaksi tarkoitetusta summasta vähennetään ensin yhteisövero. Veron jälkeen jäävä osuus sijoitetaan kasvurahastoon:
 
 ```text
-yrityksen_vuosisijoitus = yrityksen_vuosisijoitus_asetus
+yrityksen_yhteisövero =
+yrityksen_vuosisijoitus_ennen_yhteisöveroa × 18 %
+
+yrityksen_vuosisijoitus =
+yrityksen_vuosisijoitus_ennen_yhteisöveroa
+- yrityksen_yhteisövero
 ```
 
 ### Yksityishenkilön sijoituspolku aktiivisena aikana
@@ -223,7 +228,7 @@ Asetukset sisältävät käyttäjän muokattavat arvot:
 
 - aktiivisen ajan pituus
 - eläkeajan pituus
-- yrityksen vuosisijoitus
+- yrityksen vuosisijoitus ennen yhteisöveroa
 - yksityishenkilön vuosipalkka sijoittamista varten
 - vuosituotto
 - tilitoimistokulu.

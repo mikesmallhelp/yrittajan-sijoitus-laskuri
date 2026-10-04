@@ -16,7 +16,7 @@ Päänäyttö näyttää oletusarvoilla heti:
 - 15 eläkevuoden nettotulon yhteensä molemmille vaihtoehdoille
 - vaihtoehtojen erotuksen euroina ja prosentteina.
 
-Erillinen **Tarkat laskelmat** -näkymä näyttää vuosi- ja kuukausitasolla panokset, tuotot, verot, kulut, nostot ja jäljellä olevan varallisuuden.
+Erillinen **Tarkat laskelmat** -näkymä näyttää vuositasolla panokset, tuotot, verot, kulut, nostot ja jäljellä olevan varallisuuden.
 
 ## Oletusarvot
 
@@ -24,8 +24,8 @@ Erillinen **Tarkat laskelmat** -näkymä näyttää vuosi- ja kuukausitasolla pa
 |---|---:|
 | Aktiivisen yrittäjyyden kesto | 15 vuotta |
 | Eläkeajan kesto | 15 vuotta |
-| Yrityksen kuukausisijoitus | 1 000 €/kk |
-| Yksityishenkilön kuukausipalkka sijoittamista varten | 1 000 €/kk brutto |
+| Yrityksen vuosisijoitus | 12 000 €/v |
+| Yksityishenkilön vuosipalkka sijoittamista varten | 12 000 €/v brutto |
 | Sijoituksen vuosituotto ennen veroja ja kuluja | 5 % |
 | Tilitoimistokulu eläkeaikana | 1 000 €/v |
 | Yrittäjän palkkaveroprosentti | 25 % |
@@ -36,40 +36,36 @@ Verotuksessa käytettävät prosentit, rajat ja ehdot ovat sovelluksen kiinteit�
 
 ## Laskentamalli
 
-Kaikki kuukausisijoitukset tehdään kuukauden lopussa. Vuosituotto muunnetaan kuukausituotoksi:
+Kaikki laskelmat tehdään vuositasolla. Aktiivisena aikana vuosisijoitus tehdään vuoden lopussa, jolloin salkun saldo kasvaa ensin vuoden tuotolla:
 
 ```text
-kuukausituotto = (1 + vuosituotto)^(1/12) - 1
-```
-
-Kuukauden salkku:
-
-```text
-salkku_uusi = (salkku_edellinen + kuukauden_sijoitus) × (1 + kuukausituotto)
+salkku_vuoden_lopussa =
+salkku_vuoden_alussa × (1 + vuosituotto)
++ vuoden_sijoitus
 ```
 
 ### Yrityksen sijoituspolku aktiivisena aikana
 
-Yritys sijoittaa kuukausittain käyttäjän määrittämän summan:
+Yritys sijoittaa vuosittain käyttäjän määrittämän summan:
 
 ```text
-yrityksen_kuukausisijoitus = yrityksen_kuukausisijoitus_asetus
+yrityksen_vuosisijoitus = yrityksen_vuosisijoitus_asetus
 ```
 
 ### Yksityishenkilön sijoituspolku aktiivisena aikana
 
-Yrityksen maksamasta 1 000 euron bruttopalkasta sijoitettavaksi jää:
+Yrityksen maksamasta vuosipalkasta sijoitettavaksi jää:
 
 ```text
-yksityishenkilön_kuukausisijoitus_palkasta =
-  bruttopalkka × (1 - yrittäjän_palkkaveroprosentti)
+yksityishenkilön_vuosisijoitus_palkasta =
+vuosipalkka × (1 - yrittäjän_palkkaveroprosentti)
 ```
 
-Yksityishenkilön kuukausisijoitus muodostuu yrityksen maksamasta bruttopalkasta:
+Yksityishenkilön vuosisijoitus muodostuu yrityksen maksamasta bruttopalkasta:
 
 ```text
-yksityishenkilön_kuukausisijoitus =
-  yksityishenkilön_kuukausisijoitus_palkasta
+yksityishenkilön_vuosisijoitus =
+yksityishenkilön_vuosisijoitus_palkasta
 ```
 
 ### Eläkeajan yrityksen tulot
@@ -81,7 +77,7 @@ vuosittainen_tavoitejako =
 yrityksen_salkku_aktiivisen_ajan_lopussa / eläkeajan_vuosien_määrä
 ```
 
-Eläkevuosina yrityksen jäljellä oleva salkku kasvaa kuukausittain kuukausituoton verran. Vuosiosinko ja tilitoimistokulu maksetaan vuoden lopussa, jolloin vain jäljelle jäänyt saldo tuottaa seuraavina kuukausina. Tavoitejaosta vähennetään eläkevuoden tilitoimistokulu:
+Eläkevuosina yrityksen jäljellä oleva salkku kasvaa vuosituoton verran. Vuosiosinko ja tilitoimistokulu maksetaan vuoden lopussa, jolloin vain jäljelle jäänyt saldo tuottaa seuraavana vuonna. Tavoitejaosta vähennetään eläkevuoden tilitoimistokulu:
 
 ```text
 vuoden_osinkoon_käytettävä_määrä =
@@ -138,17 +134,17 @@ osingon_vero =
 ```
 
 ```text
-yrityksen_nettokuukausitulo =
-(huojennettu_pääomatulo-osinko
- + ansiotulo-osinko
- - osingon_vero) / 12
+yrityksen_vuosinettotulo =
+huojennettu_pääomatulo-osinko
++ ansiotulo-osinko
+- osingon_vero
 ```
 
 Tilitoimistokulu maksetaan ennen osinkoa vuoden lopussa. Vuoden osinkoa ei kasvateta yli eläkeajan alussa määritetyn vuosiosan, vaikka sijoitussalkku tuottaisi enemmän. Jos saldo ei riitä tavoitejakoon, jaetaan käytettävissä oleva saldo. Käyttämättä jäävät tuotot säilyvät yrityksen salkussa ja tuottavat seuraavina eläkevuosina.
 
 ### Eläkeajan yksityishenkilön tulot
 
-Yksityishenkilön salkku kasvaa eläkeaikana kuukausittain kuukausituoton verran. Vuosinosto tehdään vuoden lopussa tuoton jälkeen, joten vain noston jälkeen jäljelle jäävä saldo tuottaa seuraavina kuukausina. Salkusta nostetaan vuosittain:
+Yksityishenkilön salkku kasvaa eläkeaikana vuosituoton verran. Vuosinosto tehdään vuoden lopussa tuoton jälkeen, joten vain noston jälkeen jäljelle jäävä saldo tuottaa seuraavana vuonna. Salkusta nostetaan vuosittain:
 
 ```text
 vuosittainen_tavoitenosto =
@@ -178,8 +174,8 @@ min(voitto-osuus, 30 000 €) × 30 %
 ```
 
 ```text
-yksityishenkilön_nettokuukausitulo =
-(yksityishenkilön_bruttonosto - yksityishenkilön_vero) / 12
+yksityishenkilön_vuosinettotulo =
+yksityishenkilön_bruttonosto - yksityishenkilön_vero
 ```
 
 Jos salkun arvo ei ylitä sijoitettua pääomaa, voitto-osuuden ja veron arvo on 0 €. Vuosittainen tavoitenosto määräytyy eläkeajan alun salkun jakamisesta eläkevuosien lukumäärällä. Jos saldo ei riitä tavoitenostoon, nostetaan käytettävissä oleva saldo.
@@ -196,7 +192,7 @@ Tulossivulla esitetään ensin kaksi rinnakkaista vertailukorttia:
 Korteissa näytetään vähintään:
 
 - eläkeajan nettotulo yhteensä
-- eläkeaikainen nettotulo €/kk
+- eläkeaikainen nettotulo €/v
 - aktiivisen ajan lopun salkku
 - eläkeajan lopun salkku
 - maksetut verot ja kulut.
@@ -227,8 +223,8 @@ Asetukset sisältävät käyttäjän muokattavat arvot:
 
 - aktiivisen ajan pituus
 - eläkeajan pituus
-- yrityksen kuukausisijoitus
-- yksityishenkilön bruttopalkka sijoittamista varten
+- yrityksen vuosisijoitus
+- yksityishenkilön vuosipalkka sijoittamista varten
 - vuosituotto
 - tilitoimistokulu.
 

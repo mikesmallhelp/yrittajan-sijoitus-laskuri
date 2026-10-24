@@ -65,6 +65,17 @@ test("kaavioselite ryhmittelee akselisarjat työpöydällä", async ({ page }) =
   await expect(salkkuSelite).toBeVisible()
   await expect(nettotuloSelite).toBeVisible()
 
+  const yrityksenVerot = page.getByTestId("laskelman-luku-yritys-1-verot")
+  await yrityksenVerot.hover()
+  await yrityksenVerot.focus()
+  await expect(page.getByRole("tooltip")).toHaveText(/^Verot: .+$/)
+
+  const yrityksenAlkusaldo = page.getByTestId(
+    "laskelman-luku-yritys-1-alkusaldo"
+  )
+  await yrityksenAlkusaldo.focus()
+  await expect(page.getByRole("tooltip")).toHaveText(/^Alkusaldo: 0/)
+
   const salkkuLaatikko = await salkkuSelite.boundingBox()
   const nettotuloLaatikko = await nettotuloSelite.boundingBox()
 

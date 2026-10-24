@@ -295,6 +295,10 @@ Näkymässä on vuosittainen taulukko, jonka sarakkeissa ovat vähintään:
 - brutto- ja nettotulot
 - loppusaldo.
 
+Jokaisessa numeerisessa solussa, myös vuosiluvussa, on hiirellä ja
+näppäimistökohdistuksella avautuva tooltip. Tooltip kertoo sarakkeen nimen ja
+solun esitetyn arvon, esimerkiksi **Verot: 1 250 €**.
+
 ### Asetukset
 
 Asetukset sisältävät käyttäjän muokattavat arvot:

@@ -38,7 +38,12 @@ kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoj
 sijoitussummaa, tuottoa, kuluja, yrittäjän palkkaveroprosenttia ja eläkeläisen
 veroprosenttia.
 
-Yritys omistaa listaamattomasta yhtiöstä vähintään 10 %. Tämän vuoksi yrityksen vastaanottama vuosiosinko on mallissa verovapaa. Omistusosuus on kiinteä mallioletus, eikä sitä näytetä asetuksissa. 
+Mallissa osingon maksaja ja vastaanottaja ovat kotimaisia listaamattomia
+osakeyhtiöitä, ja osinko kuuluu vastaanottajan elinkeinotoiminnan tulolähteeseen.
+Tällainen yrityksen vastaanottama vuosiosinko on mallissa verovapaa.
+Omistusosuutta ei mallinneta: osingon verovapauden yhteydessä 10 %:n
+omistusraja koskee listaamattoman yhtiön noteeratusta yhtiöstä saamaa osinkoa
+eikä tätä mallin tilannetta.
 
 ## Laskentamalli
 
@@ -133,12 +138,18 @@ max(myytyjen_rahasto-osuuksien_myyntihinta
     - yrityksen_sijoitustuoton_vero, 0)
 ```
 
-Huojennettu osinko lasketaan listaamattoman yhtiön osakkeiden edellisen tilikauden nettovarallisuudesta. Nettovarallisuutena käytetään yrityksen eläkevuoden alun sijoitussalkun arvoa:
+Huojennettu osinko lasketaan mallissa yrityksen eläkevuoden alun
+sijoitussalkun arvosta, jota käytetään yhtiön nettovarallisuuden arviona:
 
 ```text
 matemaattinen_arvo = yrityksen_salkun_arvo_eläkevuoden_alussa
 huojennetun_osingon_enimmäismäärä = matemaattinen_arvo × 8 %
 ```
+
+Tämä on laskurin yksinkertaistus. Todellisessa verotuksessa osakkeen
+matemaattinen arvo perustuu verovuotta edeltävän vuoden tarkistettuun
+nettovarallisuuteen ja ulkona olevien osakkeiden lukumäärään. Lisäksi siihen
+voi vaikuttaa osakastason vähennyksiä, joita laskuri ei huomioi.
 
 Vuoden aikana omistajalle jaettava osinko jaetaan kahteen osaan 8 %:n rajan perusteella: 8 %:iin yhtiön matemaattisesta arvosta asti osinko on huojennettua pääomatulo-osinkoa, ja rajan ylittävä osa on ansiotulo-osinkoa:
 
@@ -158,6 +169,11 @@ veronalainen_pääomatulo =
 min(huojennettu_pääomatulo-osinko, 150 000 €) × 25 %
 + max(huojennettu_pääomatulo-osinko - 150 000 €, 0) × 85 %
 ```
+
+Laskuri soveltaa 150 000 euron rajaa vain tämän yhden yhtiön mallinnettuun
+vuosiosinkoon. Todellisessa verotuksessa raja on henkilökohtainen: kaikki
+henkilön samana verovuonna listaamattomista yhtiöistä saamat
+pääomatulo-osingot lasketaan yhteen.
 
 ```text
 veronalainen_ansiotulo =
@@ -217,7 +233,10 @@ voitto-osuus = bruttonosto ×
   (salkun_arvo - sijoitettu_pääoma) / salkun_arvo
 ```
 
-Rahasto-osuuksien vuosittaisesta myyntivoitosta maksetaan pääomatuloveroa 30 000 euroon asti 30 % ja sen ylittävältä osalta 34 %. Laskuri huomioi vain tässä sijoitussalkussa syntyvän myyntivoiton:
+Rahasto-osuuksien vuosittaisesta myyntivoitosta maksetaan pääomatuloveroa
+30 000 euroon asti 30 % ja sen ylittävältä osalta 34 %. Laskuri huomioi
+verorajan laskennassa vain tässä sijoitussalkussa syntyvän myyntivoiton; se ei
+yhdistä muita pääomatuloja, luovutusvoittoja, tappioita tai vähennyksiä:
 
 ```text
 yksityishenkilön_vero =
@@ -307,5 +326,4 @@ Muutokset päivittävät tulokset ilman sivun uudelleenlatausta. Käyttäjän ar
 Laskentakaavat perustuvat Verohallinnon ohjeisiin:
 
 - https://www.vero.fi/henkiloasiakkaat/omaisuus/sijoitukset/osingot/osingot-listaamattomasta-yhtiosta/
-- https://www.vero.fi/syventavat-vero-ohjeet/ohje-hakusivu/47901/osinkotulojen-verotus/
-- https://www.vero.fi/henkiloasiakkaat/verokortti-ja-veroilmoitus/tulot-ja-vahennykset/paaomatulot/
+- https://www.vero.fi/syventavat-vero-ohjeet/ohje-hakusivu/47901/osinkotulojen-verotus6/

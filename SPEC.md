@@ -38,13 +38,6 @@ kiinteitä malliarvoja. Käyttäjä voi muuttaa laskennan oletuksia, kuten aikoj
 sijoitussummaa, tuottoa, kuluja, yrittäjän palkkaveroprosenttia ja eläkeläisen
 veroprosenttia.
 
-Mallissa osingon maksaja ja vastaanottaja ovat kotimaisia listaamattomia
-osakeyhtiöitä, ja osinko kuuluu vastaanottajan elinkeinotoiminnan tulolähteeseen.
-Tällainen yrityksen vastaanottama vuosiosinko on mallissa verovapaa.
-Omistusosuutta ei mallinneta: osingon verovapauden yhteydessä 10 %:n
-omistusraja koskee listaamattoman yhtiön noteeratusta yhtiöstä saamaa osinkoa
-eikä tätä mallin tilannetta.
-
 ## Laskentamalli
 
 Kaikki laskelmat tehdään vuositasolla. Aktiivisena aikana vuosisijoitus tehdään vuoden lopussa, jolloin salkun saldo kasvaa ensin vuoden tuotolla:

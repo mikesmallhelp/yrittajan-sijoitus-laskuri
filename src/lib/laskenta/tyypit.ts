@@ -73,6 +73,8 @@ export interface Kaaviopiste {
   vaihe: Vaihe
   yritys: number
   yksityinen: number
+  yrityksenKumulatiivinenNettotulo: number | null
+  yksityisenKumulatiivinenNettotulo: number | null
 }
 
 export interface Laskentatulos {

@@ -19,7 +19,7 @@ const Tuottokayra = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-72 items-center justify-center rounded-xl bg-emerald-50 text-sm text-emerald-900/65 sm:h-96">
+      <div className="flex h-80 items-center justify-center rounded-xl bg-emerald-50 text-sm text-emerald-900/65 sm:h-96">
         Ladataan tuottokäyrää…
       </div>
     ),
@@ -267,13 +267,11 @@ export function LaskuriSovellus() {
                   </h2>
                 </div>
                 <p className="text-sm text-emerald-950/65">
-                  Katkoviiva merkitsee eläkeajan alkua.
+                  Vasen akseli näyttää salkun arvon ja oikea kumulatiivisen
+                  nettotulon.
                 </p>
               </div>
-              <Tuottokayra
-                pisteet={tulos.kaaviopisteet}
-                aktiivisetVuodet={asetukset.aktiivisetVuodet}
-              />
+              <Tuottokayra pisteet={tulos.kaaviopisteet} />
             </section>
 
             <div className="flex justify-center">

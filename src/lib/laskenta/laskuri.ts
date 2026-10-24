@@ -326,16 +326,49 @@ function muodostaKaaviopisteet(
     vaihe: "aktiivinen",
     yritys: 0,
     yksityinen: 0,
+    yrityksenKumulatiivinenNettotulo: null,
+    yksityisenKumulatiivinenNettotulo: null,
   }
+  let yrityksenKumulatiivinenNettotulo = 0
+  let yksityisenKumulatiivinenNettotulo = 0
 
   return [
     alku,
-    ...yritys.vuosirivit.map((rivi, indeksi) => ({
-      vuosi: rivi.vuosi,
-      vaihe: rivi.vaihe,
-      yritys: rivi.loppusaldo,
-      yksityinen: yksityinen.vuosirivit[indeksi].loppusaldo,
-    })),
+    ...yritys.vuosirivit.map((rivi, indeksi) => {
+      const yksityisenRivi = yksityinen.vuosirivit[indeksi]
+      const seuraavaYrityksenRivi = yritys.vuosirivit[indeksi + 1]
+      const onViimeinenAktiivivuosi =
+        rivi.vaihe === "aktiivinen" &&
+        seuraavaYrityksenRivi?.vaihe === "elake"
+      const nettotuloEnnenElakea = onViimeinenAktiivivuosi ? 0 : null
+      const yrityksenNettotulo =
+        rivi.vaihe === "elake" ? rivi.nettotulo : null
+      const yksityisenNettotulo =
+        yksityisenRivi.vaihe === "elake" ? yksityisenRivi.nettotulo : null
+
+      if (yrityksenNettotulo !== null) {
+        yrityksenKumulatiivinenNettotulo += yrityksenNettotulo
+      }
+
+      if (yksityisenNettotulo !== null) {
+        yksityisenKumulatiivinenNettotulo += yksityisenNettotulo
+      }
+
+      return {
+        vuosi: rivi.vuosi,
+        vaihe: rivi.vaihe,
+        yritys: rivi.loppusaldo,
+        yksityinen: yksityisenRivi.loppusaldo,
+        yrityksenKumulatiivinenNettotulo:
+          yrityksenNettotulo === null
+            ? nettotuloEnnenElakea
+            : yrityksenKumulatiivinenNettotulo,
+        yksityisenKumulatiivinenNettotulo:
+          yksityisenNettotulo === null
+            ? nettotuloEnnenElakea
+            : yksityisenKumulatiivinenNettotulo,
+      }
+    }),
   ]
 }
 

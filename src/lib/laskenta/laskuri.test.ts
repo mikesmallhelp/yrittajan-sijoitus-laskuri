@@ -98,6 +98,61 @@ describe("laskeSijoitusvertailu", () => {
     expect(yksityisenElakevuodet.at(-1)?.loppusaldo).toBe(0)
   })
 
+  it("aloittaa kumulatiiviset nettotulokäyrät nollasta viimeisenä aktiivivuonna", () => {
+    const tulos = laskeSijoitusvertailu({
+      ...OLETUS_ASETUKSET,
+      aktiivisetVuodet: 2,
+      elakevuodet: 2,
+      vuosituottoProsentti: 5,
+    })
+    const [
+      alku,
+      ensimmainenAktiivinenVuosi,
+      viimeinenAktiivinenVuosi,
+      ...elakevuosienPisteet
+    ] =
+      tulos.kaaviopisteet
+
+    expect(alku).toMatchObject({
+      yrityksenKumulatiivinenNettotulo: null,
+      yksityisenKumulatiivinenNettotulo: null,
+    })
+    expect(ensimmainenAktiivinenVuosi).toMatchObject({
+      yrityksenKumulatiivinenNettotulo: null,
+      yksityisenKumulatiivinenNettotulo: null,
+    })
+    expect(viimeinenAktiivinenVuosi).toMatchObject({
+      yrityksenKumulatiivinenNettotulo: 0,
+      yksityisenKumulatiivinenNettotulo: 0,
+    })
+
+    const yrityksenElakevuodet = tulos.yritys.vuosirivit.slice(2)
+    const yksityisenElakevuodet = tulos.yksityinen.vuosirivit.slice(2)
+
+    expect(
+      elakevuosienPisteet.map(
+        (piste) => piste.yrityksenKumulatiivinenNettotulo
+      )
+    ).toEqual(
+      yrityksenElakevuodet.map((_, indeksi) =>
+        yrityksenElakevuodet
+          .slice(0, indeksi + 1)
+          .reduce((summa, elakevuosi) => summa + elakevuosi.nettotulo, 0)
+      )
+    )
+    expect(
+      elakevuosienPisteet.map(
+        (piste) => piste.yksityisenKumulatiivinenNettotulo
+      )
+    ).toEqual(
+      yksityisenElakevuodet.map((_, indeksi) =>
+        yksityisenElakevuodet
+          .slice(0, indeksi + 1)
+          .reduce((summa, elakevuosi) => summa + elakevuosi.nettotulo, 0)
+      )
+    )
+  })
+
   it("verottaa yksityishenkilöä vain myyntivoiton osuudesta", () => {
     const tulos = laskeSijoitusvertailu({
       ...OLETUS_ASETUKSET,

@@ -12,7 +12,7 @@ Laskenta jakautuu kahteen jaksoon:
 Päänäyttö näyttää oletusarvoilla heti:
 
 - yrityksen ja yksityishenkilön sijoitussalkkujen kehityksen
-- visuaalisen tuottokäyrän
+- visuaalisen tuottokäyrän, jossa näkyvät salkkuarvot sekä eläkeajan kumulatiiviset nettotulot
 - 15 eläkevuoden nettotulon yhteensä molemmille vaihtoehdoille
 - vaihtoehtojen erotuksen euroina ja prosentteina.
 
@@ -268,7 +268,18 @@ Sivun pääkorostus on teksti:
 
 > Eläkeajalla yhteensä saatava nettotulo: yrityksenä X €, yksityishenkilönä Y €.
 
-Tuottokäyrä näyttää molempien salkkujen arvon ajan funktiona ja erottaa aktiivisen ajan eläkeajasta.
+Tuottokäyrä näyttää molempien salkkujen arvon ajan funktiona. Se näyttää lisäksi kummankin vaihtoehdon eläkeajan alusta kertyvän kumulatiivisen nettotulon. Nettotulokäyrät alkavat nollasta viimeisen aktiivivuoden kohdalla ennen ensimmäistä eläkevuotta. Salkkuarvot käyttävät kuvaajan vasenta euroakselia ja kumulatiiviset nettotulot oikeaa euroakselia, jotta eri mittaluokan arvot pysyvät luettavina.
+
+Kumulatiivisen nettotulon ensimmäinen eläkevuoden piste vastaa sen vuoden nettotuloa. Jokainen seuraava piste sisältää myös aiempien eläkevuosien nettotulot. Vuoden 0 ja viimeistä aktiivivuotta edeltävien vuosien nettotulo jätetään kuvaajasta puuttuvaksi arvoksi, jotta kuvaaja ei esitä niitä nollatuloina. Salkkuarvot piirretään yhtenäisinä viivoina ja kumulatiiviset nettotulot katkoviivoina, joten sarjat erottuvat myös ilman väriä.
+
+Kaavion alareunan selite on ryhmitelty akseleittain. Vasemmalla, salkkuarvon
+akselin yhteydessä, ovat ensin **Sijoittaminen yksityishenkilönä: salkku** ja
+sitten **Sijoittaminen yrityksenä: salkku**. Oikealla, kumulatiivisen
+nettotulon akselin yhteydessä, ovat ensin **Sijoittaminen yksityishenkilönä:
+kumulatiivinen nettotulo (eläke yksityishenkilösijoittajalle)** ja sitten
+**Sijoittaminen yrityksenä: kumulatiivinen nettotulo (eläke
+yrittäjäsijoittajalle)**. Kapeilla näytöillä ryhmät voivat pinoutua, mutta
+niiden järjestys säilyy.
 
 ### Tarkat laskelmat
 

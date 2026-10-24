@@ -25,6 +25,19 @@ for (const leveys of [320, 390]) {
     await expect(
       page.getByRole("heading", { name: "Nettotulojen yhteenveto" })
     ).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Tuottokäyrä" })
+    ).toBeVisible()
+    const salkkuSelite = page.getByTestId("tuottokayra-selite-salkku")
+    const nettotuloSelite = page.getByTestId("tuottokayra-selite-nettotulo")
+    await expect(salkkuSelite.getByRole("listitem")).toHaveText([
+      "Sijoittaminen yksityishenkilönä: salkku",
+      "Sijoittaminen yrityksenä: salkku",
+    ])
+    await expect(nettotuloSelite.getByRole("listitem")).toHaveText([
+      "Sijoittaminen yksityishenkilönä: kumulatiivinen nettotulo (eläke yksityishenkilösijoittajalle)",
+      "Sijoittaminen yrityksenä: kumulatiivinen nettotulo (eläke yrittäjäsijoittajalle)",
+    ])
 
     const sivuYlivuotaa = await page.locator("html").evaluate((elementti) => {
       return elementti.scrollWidth > elementti.clientWidth
@@ -41,3 +54,23 @@ for (const leveys of [320, 390]) {
     expect(taulukkoOnLeveampi).toBe(true)
   })
 }
+
+test("kaavioselite ryhmittelee akselisarjat työpöydällä", async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 844 })
+  await page.goto("/")
+
+  const salkkuSelite = page.getByTestId("tuottokayra-selite-salkku")
+  const nettotuloSelite = page.getByTestId("tuottokayra-selite-nettotulo")
+
+  await expect(salkkuSelite).toBeVisible()
+  await expect(nettotuloSelite).toBeVisible()
+
+  const salkkuLaatikko = await salkkuSelite.boundingBox()
+  const nettotuloLaatikko = await nettotuloSelite.boundingBox()
+
+  if (!salkkuLaatikko || !nettotuloLaatikko) {
+    throw new Error("Kaavioselitteen sijaintia ei voitu mitata.")
+  }
+
+  expect(nettotuloLaatikko.x).toBeGreaterThan(salkkuLaatikko.x)
+})

@@ -35,13 +35,3 @@ pnpm build
 pnpm exec playwright install chromium
 ```
 
-## Laskentamallin huomio
-
-Yrityksen rahastomyynneissä hankintameno kohdistetaan suhteellisesti myynnin
-osuudelle ennen myyntiä olevasta salkusta. Tällä tavoin myyntivoitto voidaan
-laskea vuosittain johdonmukaisesti myös eläkeajan osittaisissa myynneissä.
-
-Eläkeaikana myynti tai bruttonosto lasketaan vuosittain tuoton jälkeisestä
-salkusta jaettuna jäljellä olevilla eläkevuosilla. Sääntö tasaa myyntejä
-salkun toteutuneen kehityksen mukaan ja myy viimeisenä vuonna automaattisesti
-koko jäljellä olevan salkun.

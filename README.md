@@ -8,6 +8,10 @@ muuttaa sijoitusmääriä, kestoja, tuotto-odotusta, tilitoimistokulua sekä
 yrittäjän palkka- ja eläkeläisen veroprosenttia. Yhteisövero sekä pääoma- ja
 osinkoverotuksen rajat ja ehdot ovat laskurin kiinteitä malliarvoja.
 
+![](kuvat/kuva1.png)
+
+Huom: Sovellusta on testattu jonkin verran, mutta lisää testausta vaaditaan.
+
 ## Käyttö
 
 ```bash
